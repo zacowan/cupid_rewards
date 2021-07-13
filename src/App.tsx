@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Pages
 import LoginPage from "./pages/Login";
+import SignupPage from "./pages/Signup";
 import HomePage from "./pages/Home";
 import NoMatchPage from "./pages/404";
 
@@ -29,6 +30,9 @@ const App: React.FC = () => {
             <Switch>
               <Route path="/login">
                 <LoginPage />
+              </Route>
+              <Route path="/signup">
+                <SignupPage />
               </Route>
               <Route exact path="/">
                 <HomePage />

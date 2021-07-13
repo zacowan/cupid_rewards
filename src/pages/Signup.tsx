@@ -13,27 +13,37 @@ import {
 import { Link } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 
-const LoginPage: React.FC = () => {
+const SignupPage: React.FC = () => {
   const auth = firebase.auth();
   const linkProps = BumbagLink.useProps();
 
   return (
     <PageContent>
       <Stack>
-        <Heading>Login</Heading>
+        <Heading>Sign Up</Heading>
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{ name: "", email: "", password: "", confirm: "" }}
           onSubmit={async (data) => {
             try {
-              await auth.signInWithEmailAndPassword(data.email, data.password);
-              console.log("Successfully logged in.");
+              const creds = await auth.createUserWithEmailAndPassword(
+                data.email,
+                data.password
+              );
+              await creds.user?.updateProfile({ displayName: data.name });
+              console.log("Successfully created account.");
             } catch (error) {
-              console.error("There was an error logging in.");
+              console.error("There was an error signing up.");
             }
           }}
         >
           <Form>
             <FieldStack>
+              <Field
+                component={InputField.Formik}
+                name="name"
+                label="Name"
+                placeholder="First Last"
+              />
               <Field
                 component={InputField.Formik}
                 name="email"
@@ -45,14 +55,19 @@ const LoginPage: React.FC = () => {
                 name="password"
                 label="Password"
               />
-              <Button type="submit">Log In</Button>
+              <Field
+                component={InputField.Formik}
+                name="confirm"
+                label="Confirm Password"
+              />
+              <Button type="submit">Sign Up</Button>
             </FieldStack>
           </Form>
         </Formik>
         <Text.Block>
-          Don't have an account?{" "}
-          <Link {...linkProps} to="/signup">
-            Sign up.
+          Already have an account?{" "}
+          <Link {...linkProps} to="/login">
+            Log in.
           </Link>
         </Text.Block>
       </Stack>
@@ -60,4 +75,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;

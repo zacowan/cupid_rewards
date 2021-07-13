@@ -12,5 +12,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
-auth.useEmulator("http://localhost:9099");
+if (process.env.NODE_ENV === "development") {
+  const auth = firebase.auth();
+  auth.useEmulator("http://localhost:9099");
+}
