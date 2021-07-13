@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Provider as BumbagProvider, PageWithHeader, TopNav } from "bumbag";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-function App() {
+// Pages
+import LoginPage from "./pages/Login";
+import SignupPage from "./pages/Signup";
+import HomePage from "./pages/Home";
+import NoMatchPage from "./pages/404";
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <BumbagProvider>
+      <div style={{ height: "100%" }}>
+        <PageWithHeader
+          header={
+            <TopNav>
+              <TopNav.Section marginLeft="major-2">
+                <TopNav.Item fontWeight="bold" href="/">
+                  Cupid Rewards
+                </TopNav.Item>
+              </TopNav.Section>
+              <TopNav.Section marginRight="major-2">
+                <TopNav.Item href="/login">Login</TopNav.Item>
+              </TopNav.Section>
+            </TopNav>
+          }
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Router>
+            <Switch>
+              <Route path="/login">
+                <LoginPage />
+              </Route>
+              <Route path="/signup">
+                <SignupPage />
+              </Route>
+              <Route exact path="/">
+                <HomePage />
+              </Route>
+              <Route path="*">
+                <NoMatchPage />
+              </Route>
+            </Switch>
+          </Router>
+        </PageWithHeader>
+      </div>
+    </BumbagProvider>
   );
-}
+};
 
 export default App;
