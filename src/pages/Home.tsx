@@ -1,10 +1,14 @@
 import React from "react";
+import firebase from "firebase/app";
+import { PageContent, Heading, Stack } from "bumbag";
 
 const HomePage: React.FC = () => {
   return (
-    <div>
-      <h1>Home Page</h1>
-    </div>
+    <PageContent>
+      <Stack>
+        <Heading>Home</Heading>
+      </Stack>
+    </PageContent>
   );
 };
 

@@ -1,7 +1,11 @@
 import React from "react";
-import { Provider as BumbagProvider, PageWithHeader, TopNav } from "bumbag";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import NavButton from "./components/NavButton";
+import {
+  Provider as BumbagProvider,
+  PageWithHeader,
+  TopNav,
+  Button,
+} from "bumbag";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 // Pages
 import LoginPage from "./pages/Login";
@@ -18,13 +22,32 @@ const App: React.FC = () => {
             header={
               <TopNav>
                 <TopNav.Section marginLeft="major-2">
-                  <TopNav.Item fontWeight="bold" href="/">
-                    Cupid Rewards
+                  <TopNav.Item>
+                    {(navProps) => (
+                      <Link {...navProps} to="/">
+                        Cupid Rewards
+                      </Link>
+                    )}
                   </TopNav.Item>
                 </TopNav.Section>
                 <TopNav.Section marginRight="major-2">
                   <TopNav.Item>
-                    <NavButton to="/login" label="Login" />
+                    <Button palette="primary" variant="ghost">
+                      {(buttonProps) => (
+                        <Link {...buttonProps} to="/login">
+                          Login
+                        </Link>
+                      )}
+                    </Button>
+                  </TopNav.Item>
+                  <TopNav.Item>
+                    <Button palette="primary">
+                      {(buttonProps) => (
+                        <Link {...buttonProps} to="/signup">
+                          Sign Up
+                        </Link>
+                      )}
+                    </Button>
                   </TopNav.Item>
                 </TopNav.Section>
               </TopNav>
