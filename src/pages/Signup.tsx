@@ -10,12 +10,13 @@ import {
   Link as BumbagLink,
   Text,
 } from "bumbag";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 
 const SignupPage: React.FC = () => {
   const auth = firebase.auth();
   const linkProps = BumbagLink.useProps();
+  const history = useHistory();
 
   return (
     <PageContent>
@@ -31,6 +32,7 @@ const SignupPage: React.FC = () => {
               );
               await creds.user?.updateProfile({ displayName: data.name });
               console.log("Successfully created account.");
+              history.push("/");
             } catch (error) {
               console.error("There was an error signing up.");
             }

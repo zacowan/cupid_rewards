@@ -10,12 +10,13 @@ import {
   Link as BumbagLink,
   Text,
 } from "bumbag";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 
 const LoginPage: React.FC = () => {
   const auth = firebase.auth();
   const linkProps = BumbagLink.useProps();
+  const history = useHistory();
 
   return (
     <PageContent>
@@ -27,6 +28,7 @@ const LoginPage: React.FC = () => {
             try {
               await auth.signInWithEmailAndPassword(data.email, data.password);
               console.log("Successfully logged in.");
+              history.push("/");
             } catch (error) {
               console.error("There was an error logging in.");
             }
