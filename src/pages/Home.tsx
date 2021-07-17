@@ -1,25 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PageContent, Heading, Stack, Tabs, Card, Set, Button } from "bumbag";
 import { Link } from "react-router-dom";
 
-const mockRewardPages: RewardPageType[] = [
-  {
-    title: "Mock Reward Page",
-    description: "This is a mock reward page.",
-    id: "0",
-  },
-];
-
-type RewardPageType = {
-  title: string;
-  description?: string;
-  id: string;
-};
+import GetRewardsPages from "../api/GetRewardsPages";
+import { RewardsPageWithID } from "../api/utils";
 
 const HomePage: React.FC = () => {
-  const [myPages, setMyPages] = useState<RewardPageType[]>(mockRewardPages);
-  const [myRewards, setMyRewards] = useState<RewardPageType[]>(mockRewardPages);
+  const [myPages, setMyPages] = useState<Array<RewardsPageWithID>>([]);
+  const [myRewards, setMyRewards] = useState<Array<RewardsPageWithID>>([]);
   const buttonProps = Button.useProps({ marginTop: "major-2", width: "100%" });
+
+  useEffect(() => {
+    const loadData = async () => {
+      const pages = await GetRewardsPages();
+      setMyPages(pages);
+    };
+    loadData();
+  }, []);
 
   return (
     <PageContent>
@@ -31,9 +28,9 @@ const HomePage: React.FC = () => {
             <Tabs.Tab tabId="my-rewards">My Rewards</Tabs.Tab>
           </Tabs.List>
           <Tabs.Panel tabId="my-pages" marginTop="major-2">
-            <Stack spacing="major-1">
+            <Stack spacing="major-2">
               <Link {...buttonProps} to="/create-rewards-page">
-                Add
+                Create
               </Link>
               {myPages.map((p) => (
                 <Card

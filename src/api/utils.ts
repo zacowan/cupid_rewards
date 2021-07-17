@@ -1,6 +1,10 @@
 // Firebase constants
 export const REWARDS_PAGES_COLLECTION = "rewards_pages";
 // Types
+export type RewardsPageWithID = RewardsPage & {
+  id: string;
+};
+
 export type RewardsPage = {
   title: string;
   description?: string;
