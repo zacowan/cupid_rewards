@@ -7,8 +7,13 @@ import {
 
 const store = firebase.firestore();
 
-const GetRewardsPages = async (): Promise<Array<RewardsPageWithID>> => {
-  const snapshot = await store.collection(REWARDS_PAGES_COLLECTION).get();
+const GetRewardsPages = async (
+  uid: string
+): Promise<Array<RewardsPageWithID>> => {
+  const snapshot = await store
+    .collection(REWARDS_PAGES_COLLECTION)
+    .where("created_by", "==", uid)
+    .get();
   let ret: Array<RewardsPageWithID> = [];
   snapshot.forEach((doc) => {
     const data = doc.data() as RewardsPage;

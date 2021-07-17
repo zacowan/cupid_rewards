@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { PageContent, Heading, Stack, Tabs, Card, Set, Button } from "bumbag";
 import { Link } from "react-router-dom";
 
+import { AuthContext } from "../components/AuthContext";
 import GetRewardsPages from "../api/GetRewardsPages";
 import DeleteRewardsPage from "../api/DeleteRewardsPage";
 import { RewardsPageWithID } from "../api/utils";
 
 const HomePage: React.FC = () => {
+  const { user } = useContext(AuthContext);
   const [myPages, setMyPages] = useState<Array<RewardsPageWithID>>([]);
   const [myRewards, setMyRewards] = useState<Array<RewardsPageWithID>>([]);
   const buttonProps = Button.useProps({ marginTop: "major-2", width: "100%" });
 
   useEffect(() => {
     const loadData = async () => {
-      const pages = await GetRewardsPages();
+      const pages = await GetRewardsPages(user!.uid);
       setMyPages(pages);
     };
     loadData();
-  }, []);
+  }, [user]);
 
   const handleDeletePage = async (id: string) => {
     try {
