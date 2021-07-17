@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBzD5F0aezkshTIAxrapFzPy5SYeWsuxYo",
@@ -15,4 +16,6 @@ firebase.initializeApp(firebaseConfig);
 if (process.env.NODE_ENV === "development") {
   const auth = firebase.auth();
   auth.useEmulator("http://localhost:9099");
+  const store = firebase.firestore();
+  store.useEmulator("localhost", 8080);
 }
