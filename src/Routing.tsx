@@ -10,6 +10,7 @@ import { AuthContext } from "./components/AuthContext";
 import LoginPage from "./pages/Login";
 import SignupPage from "./pages/Signup";
 import HomePage from "./pages/Home";
+import CRPPage from "./pages/CreateRewardsPage";
 import NoMatchPage from "./pages/404";
 
 const Routing: React.FC = () => {
@@ -71,6 +72,9 @@ const Routing: React.FC = () => {
         }
       >
         <Switch>
+          <ProtectedRoute path="/create-rewards-page">
+            <CRPPage />
+          </ProtectedRoute>
           <Route path="/login">
             <LoginPage />
           </Route>
