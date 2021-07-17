@@ -3,6 +3,7 @@ import { PageContent, Heading, Stack, Tabs, Card, Set, Button } from "bumbag";
 import { Link } from "react-router-dom";
 
 import GetRewardsPages from "../api/GetRewardsPages";
+import DeleteRewardsPage from "../api/DeleteRewardsPage";
 import { RewardsPageWithID } from "../api/utils";
 
 const HomePage: React.FC = () => {
@@ -17,6 +18,19 @@ const HomePage: React.FC = () => {
     };
     loadData();
   }, []);
+
+  const handleDeletePage = async (id: string) => {
+    try {
+      await DeleteRewardsPage(id);
+      let newPages: Array<RewardsPageWithID> = [];
+      myPages.forEach((p) => {
+        if (p.id !== id) newPages.push(p);
+      });
+      setMyPages(newPages);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <PageContent>
@@ -41,6 +55,7 @@ const HomePage: React.FC = () => {
                       iconBefore="solid-trash"
                       palette="danger"
                       variant="ghost"
+                      onClick={() => handleDeletePage(p.id)}
                     >
                       Delete
                     </Button>
