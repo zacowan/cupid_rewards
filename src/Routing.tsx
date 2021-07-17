@@ -11,6 +11,8 @@ import LoginPage from "./pages/Login";
 import SignupPage from "./pages/Signup";
 import HomePage from "./pages/Home";
 import CRPPage from "./pages/CreateRewardsPage";
+import RPPage from "./pages/RewardsPage";
+import ManagePage from "./pages/Manage";
 import NoMatchPage from "./pages/404";
 
 const Routing: React.FC = () => {
@@ -72,6 +74,12 @@ const Routing: React.FC = () => {
         }
       >
         <Switch>
+          <ProtectedRoute path="/rewards">
+            <RPPage />
+          </ProtectedRoute>
+          <ProtectedRoute path="/manage">
+            <ManagePage />
+          </ProtectedRoute>
           <ProtectedRoute path="/create-rewards-page">
             <CRPPage />
           </ProtectedRoute>

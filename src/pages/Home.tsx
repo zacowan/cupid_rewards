@@ -11,7 +11,14 @@ const HomePage: React.FC = () => {
   const { user } = useContext(AuthContext);
   const [myPages, setMyPages] = useState<Array<RewardsPageWithID>>([]);
   const [myRewards, setMyRewards] = useState<Array<RewardsPageWithID>>([]);
-  const buttonProps = Button.useProps({ marginTop: "major-2", width: "100%" });
+  const createButtonProps = Button.useProps({
+    width: "100%",
+    palette: "primary",
+  });
+  const manageButtonProps = Button.useProps({
+    palette: "primary",
+    variant: "outlined",
+  });
 
   useEffect(() => {
     const loadData = async () => {
@@ -45,27 +52,25 @@ const HomePage: React.FC = () => {
           </Tabs.List>
           <Tabs.Panel tabId="my-pages" marginTop="major-2">
             <Stack spacing="major-2">
-              <Link {...buttonProps} to="/create-rewards-page">
+              <Link {...createButtonProps} to="/create-rewards-page">
                 Create
               </Link>
               {myPages.map((p) => (
                 <Card
                   key={p.id}
                   title={p.title}
-                  headerAddon={
-                    <Button
-                      iconBefore="solid-trash"
-                      palette="danger"
-                      variant="ghost"
-                      onClick={() => handleDeletePage(p.id)}
-                    >
-                      Delete
-                    </Button>
-                  }
                   footer={
                     <Set>
-                      <Button palette="primary">View</Button>
-                      <Button>Edit</Button>
+                      <Link {...manageButtonProps} to="/manage">
+                        Manage
+                      </Link>
+                      <Button
+                        onClick={() => handleDeletePage(p.id)}
+                        variant="ghost"
+                        palette="danger"
+                      >
+                        Delete
+                      </Button>
                     </Set>
                   }
                 >
