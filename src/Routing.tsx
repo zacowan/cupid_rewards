@@ -16,7 +16,7 @@ const Routing: React.FC = () => {
   const { user } = useContext(AuthContext);
 
   if (user === undefined) {
-    return <div>Loading...</div>;
+    return null;
   }
 
   return (
